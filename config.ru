@@ -1,12 +1,10 @@
 require 'sinatra'
 
-before do
-  response.headers["Access-Control-Allow-Origin"] = "*"
-end
+rest_browser_html = File.read('./public/rest-browser.html').to_s
 
 get '/' do
   if (request.accept.include? 'text/html')
-    File.read './public/rest-browser.html'
+    rest_browser_html
   else
     pass
   end
@@ -31,6 +29,10 @@ get '/two' do
   """
     <thing id=\"two\" things=\"../\" />
   """
+end
+
+before do
+  response.headers["Access-Control-Allow-Origin"] = "*"
 end
 
 options '/*' do
